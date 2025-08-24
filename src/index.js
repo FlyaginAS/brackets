@@ -1,7 +1,3 @@
-module.exports = function check(/* str, bracketsConfig */) {
-  throw new Error('Not implemented');
-};
-
 function generateDict(bracketsConfigArr) {
   // [['(', ')'], ['[', ']'], ['{', '}']]
   const configArr = [];
@@ -14,13 +10,13 @@ function generateDict(bracketsConfigArr) {
 }
 
 function generateOpenBrackets(dict) {
-  return Object.keys(dict);
-}
-function generateCloseBrackets(dict) {
   return Object.values(dict);
 }
+function generateCloseBrackets(dict) {
+  return Object.keys(dict);
+}
 
-function isBracketsBalanced(str, bracketsConfigArr) {
+module.exports = function check(str, bracketsConfigArr) {
   // можно попробовать сгенерить dict из переданного конфига
   // и openBrackets с closeBrackets сгенерить из dict
   // тогда возможно смогу заиспользовать старое решение из js101 с минимальными правкаи
@@ -39,7 +35,14 @@ function isBracketsBalanced(str, bracketsConfigArr) {
   }
 
   for (let i = 0; i < str.length; i += 1) {
-    if (isOpenBracket(str[i])) {
+    if (isCloseBracket(str[i]) && isOpenBracket(str[i])) {
+      // '|()|(||)||'
+      if (stack.length > 0 && stack.at(-1) === str[i]) {
+        stack.pop();
+      } else {
+        stack.push(str[i]);
+      }
+    } else if (isOpenBracket(str[i])) {
       stack.push(str[i]);
     } else if (isCloseBracket(str[i])) {
       //  проверяеям что стек не пуст перед pop()
@@ -57,7 +60,7 @@ function isBracketsBalanced(str, bracketsConfigArr) {
   }
 
   return bracketsAreRight;
-}
+};
 
 //! from my similar task js101
 // function isBracketsBalanced(str) {
