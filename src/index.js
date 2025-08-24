@@ -2,31 +2,33 @@ module.exports = function check(/* str, bracketsConfig */) {
   throw new Error('Not implemented');
 };
 
- function generateDict(bracketsConfigArr){ //[['(', ')'], ['[', ']'], ['{', '}']]
-    const configArr=[];
-    // a little change arr for appropriate structure of my dict
-    for(let i=0;i<bracketsConfigArr.length;i++){
-      configArr.push([bracketsConfigArr[i][1],bracketsConfigArr[i][0]]);
-    }
-    
-    return Object.fromEntries(configArr);
-    
+function generateDict(bracketsConfigArr) {
+  // [['(', ')'], ['[', ']'], ['{', '}']]
+  const configArr = [];
+  // a little change arr for appropriate structure of my dict
+  for (let i = 0; i < bracketsConfigArr.length; i += 1) {
+    configArr.push([bracketsConfigArr[i][1], bracketsConfigArr[i][0]]);
   }
-generateDict([['(', ')'], ['[', ']'], ['{', '}']])
+
+  return Object.fromEntries(configArr);
+}
+
+function generateOpenBrackets(dict) {
+  return Object.keys(dict);
+}
+function generateCloseBrackets(dict) {
+  return Object.values(dict);
+}
 
 function isBracketsBalanced(str, bracketsConfigArr) {
-  //можно попробовать сгенерить dict из переданного конфига
+  // можно попробовать сгенерить dict из переданного конфига
   // и openBrackets с closeBrackets сгенерить из dict
   // тогда возможно смогу заиспользовать старое решение из js101 с минимальными правкаи
 
- 
-  function generateOpenBrackets(dict){}
-  function generateCloseBrackets(dict){}
-
   const stack = [];
   const dict = generateDict(bracketsConfigArr);
-  const openBrackets = ['(', '[', '{', '<'];
-  const closeBrackets = [')', ']', '}', '>'];
+  const openBrackets = generateOpenBrackets(dict);
+  const closeBrackets = generateCloseBrackets(dict);
   let bracketsAreRight = true;
 
   function isOpenBracket(char) {
