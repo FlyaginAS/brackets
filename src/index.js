@@ -2,24 +2,29 @@ module.exports = function check(/* str, bracketsConfig */) {
   throw new Error('Not implemented');
 };
 
+ function generateDict(bracketsConfigArr){ //[['(', ')'], ['[', ']'], ['{', '}']]
+    const configArr=[];
+    // a little change arr for appropriate structure of my dict
+    for(let i=0;i<bracketsConfigArr.length;i++){
+      configArr.push([bracketsConfigArr[i][1],bracketsConfigArr[i][0]]);
+    }
+    
+    return Object.fromEntries(configArr);
+    
+  }
+generateDict([['(', ')'], ['[', ']'], ['{', '}']])
+
 function isBracketsBalanced(str, bracketsConfigArr) {
   //можно попробовать сгенерить dict из переданного конфига
   // и openBrackets с closeBrackets сгенерить из dict
-  // тогда возможно смогу заиспользовать старое решение с минимальными правкаи
+  // тогда возможно смогу заиспользовать старое решение из js101 с минимальными правкаи
 
-  function generateDict(bracketsConfigArr){
-
-  }
+ 
   function generateOpenBrackets(dict){}
   function generateCloseBrackets(dict){}
 
   const stack = [];
-  const dict = {
-    ')': '(',
-    ']': '[',
-    '}': '{',
-    '>': '<',
-  };
+  const dict = generateDict(bracketsConfigArr);
   const openBrackets = ['(', '[', '{', '<'];
   const closeBrackets = [')', ']', '}', '>'];
   let bracketsAreRight = true;
